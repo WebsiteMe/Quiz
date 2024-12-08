@@ -10,104 +10,48 @@
       text-align: center;
       padding: 20px;
     }
-    .hidden {
-      display: none;
+
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      font-size: 16px;
     }
+
     table {
-      margin: 20px auto;
+      margin-top: 20px;
       border-collapse: collapse;
       width: 50%;
+      margin-left: auto;
+      margin-right: auto;
     }
+
     th, td {
       border: 1px solid #ddd;
       padding: 8px;
     }
+
     th {
       background-color: #f2f2f2;
     }
+
+    #feedback {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    body {
+  font-family: Arial, sans-serif !important;
+}
+
   </style>
 </head>
 <body>
   <h1>Quiz Challenge</h1>
 
-  <div id="nameInput">
-    <p>Please enter your name:</p>
-    <input type="text" id="name" placeholder="Your name">
-    <button onclick="startQuiz()">Start</button>
-  </div>
+  <form action="https://loginnow.pythonanywhere.com/">
+    <label for="name">Gunakan namamu yang benar agar aku tau:</label><br>
+    <input type="text" id="name" name="name" placeholder="Your name" required><br>
+    <button type="submit">Start Quiz</button>
+  </form>
 
-  <div id="quiz" class="hidden">
-    <p>Answer this question:</p>
-    <p><strong>Q3Rme0luaSBqYXdhYmFueWF9</strong></p>
-    <input type="text" id="answer" placeholder="Your answer">
-    <button onclick="submitAnswer()">Submit</button>
-    <p id="feedback"></p>
-  </div>
-
-  <div id="leaderboard">
-    <h2>Leaderboard</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Rank</th>
-          <th>Name</th>
-          <th>Time</th>
-        </tr>
-      </thead>
-      <tbody id="leaderboardBody">
-        <!-- Leaderboard entries will be added here -->
-      </tbody>
-    </table>
-  </div>
-
-  <script>
-    let correctAnswer = "Ctf{Ini jawabanya}";
-    let leaderboard = [];
-
-    function startQuiz() {
-      const name = document.getElementById("name").value.trim();
-      if (name === "") {
-        alert("Please enter your name!");
-        return;
-      }
-
-      localStorage.setItem("quizName", name);
-      document.getElementById("nameInput").classList.add("hidden");
-      document.getElementById("quiz").classList.remove("hidden");
-    }
-
-    function submitAnswer() {
-      const answer = document.getElementById("answer").value.trim();
-      const name = localStorage.getItem("quizName");
-      const feedback = document.getElementById("feedback");
-
-      if (answer === correctAnswer) {
-        const timestamp = new Date().toLocaleString();
-        leaderboard.push({ name, time: timestamp });
-        updateLeaderboard();
-        feedback.textContent = "Correct! Your name has been recorded.";
-        feedback.style.color = "green";
-      } else {
-        feedback.textContent = "Wrong answer, try again!";
-        feedback.style.color = "red";
-      }
-    }
-
-    function updateLeaderboard() {
-      const leaderboardBody = document.getElementById("leaderboardBody");
-      leaderboard.sort((a, b) => new Date(a.time) - new Date(b.time));
-      leaderboardBody.innerHTML = "";
-
-      leaderboard.forEach((entry, index) => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td>${index + 1}</td>
-          <td>${entry.name}</td>
-          <td>${entry.time}</td>
-        `;
-        leaderboardBody.appendChild(row);
-      });
-    }
-  </script>
 </body>
 </html>
